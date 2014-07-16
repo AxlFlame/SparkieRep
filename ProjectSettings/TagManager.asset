@@ -12,6 +12,7 @@ TagManager:
   - BombPickup
   - ExplosionFX
   - HealthBar
+  - ceiling
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   User Layer 11: Pickups
   User Layer 12: Ground
   User Layer 13: HUD
-  User Layer 14: 
+  User Layer 14: Ceiling
   User Layer 15: 
   User Layer 16: 
   User Layer 17: 

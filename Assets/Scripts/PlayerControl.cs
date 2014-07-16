@@ -5,6 +5,7 @@ public class PlayerControl : MonoBehaviour
 {
 	[HideInInspector]
 	public bool facingRight = true;			// For determining which way the player is currently facing.
+	public bool upsideDown = false;
 	[HideInInspector]
 	public bool jump = false;				// Condition for whether the player should jump.
 
@@ -20,7 +21,9 @@ public class PlayerControl : MonoBehaviour
 
 	//private int tauntIndex;					// The index of the taunts array indicating the most recent taunt.
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
+	private Transform groundCheckTop;
 	private bool grounded = false;			// Whether or not the player is grounded.
+	private bool groundedTop = false;
 	private Animator anim;					// Reference to the player's animator component.
 
 
@@ -28,6 +31,7 @@ public class PlayerControl : MonoBehaviour
 	{
 		// Setting up references.
 		groundCheck = transform.Find("groundCheck");
+		groundCheckTop = transform.Find("groundCheckTop");
 		anim = GetComponent<Animator>();
 	}
 
@@ -35,10 +39,11 @@ public class PlayerControl : MonoBehaviour
 	void Update()
 	{
 		// The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
-		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
+		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+		groundedTop = Physics2D.Linecast(transform.position, groundCheckTop.position, 1 << LayerMask.NameToLayer("Ground"));  
 
 		// If the jump button is pressed and the player is grounded then the player should jump.
-		if(Input.GetButtonDown("Jump") && grounded)
+		if(Input.GetButtonDown("Jump")) // && grounded
 			jump = true;
 	}
 
@@ -70,6 +75,15 @@ public class PlayerControl : MonoBehaviour
 			// ... flip the player.
 			Flip();
 
+		if (groundedTop && !upsideDown)
+		{
+			FlipVertical();
+		}
+		else if (groundedTop && upsideDown)
+		{
+			FlipVertical();
+		}
+
 		// If the player should jump...
 		if(jump)
 		{
@@ -82,7 +96,15 @@ public class PlayerControl : MonoBehaviour
 
 			// Add a vertical force to the player.
 			//rigidbody2D.AddForce(new Vector2(0f, jumpForce));
-			rigidbody2D.gravityScale = -1;
+			if (rigidbody2D.gravityScale == 1.5f)
+			{
+				rigidbody2D.gravityScale = -1.5f;
+			}
+			else
+			{
+				rigidbody2D.gravityScale = 1.5f;
+			}
+
 
 			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
 			jump = false;
@@ -99,6 +121,14 @@ public class PlayerControl : MonoBehaviour
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+	}
+
+	void FlipVertical()
+	{
+		upsideDown = !upsideDown;
+		Vector3 theScaleVert = transform.localScale;
+		theScaleVert.y *= -1;
+		transform.localScale = theScaleVert;
 	}
 
 
