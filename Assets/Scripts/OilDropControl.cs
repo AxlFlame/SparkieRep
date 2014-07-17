@@ -12,4 +12,12 @@ public class OilDropControl : MonoBehaviour {
 	void Update () {
 		//transform.position.y -= 1;
 	}
+
+	void OnCollisionEnter2D (Collision2D col)
+	{
+		if(col.gameObject.tag == "Player")
+		{
+			Destroy(gameObject);
+		}
+	}
 }

@@ -110,7 +110,19 @@ public class PlayerControl : MonoBehaviour
 			jump = false;
 		}
 	}
-	
+
+	void OnCollisionEnter2D (Collision2D col)
+	{
+		if(col.gameObject.tag == "Cord")
+		{
+			maxSpeed += 5;
+		}
+	}
+
+	void OnCollisionExit2D (Collision2D col)
+	{
+		maxSpeed = 9;
+	}
 	
 	void Flip ()
 	{
