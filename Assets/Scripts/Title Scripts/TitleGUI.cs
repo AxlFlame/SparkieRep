@@ -37,7 +37,7 @@ public class TitleGUI : MonoBehaviour {
 		}
 		MessageDisplayOnAbout += "\n Pressione Esc para retornar ao Menu Principal.";
 
-		levelToLoadWhenClickedPlay = "Level01";
+		levelToLoadWhenClickedPlay = "Level01F";
 	}
 
 	void OnGUI(){
@@ -71,7 +71,7 @@ public class TitleGUI : MonoBehaviour {
 		if (GUILayout.Button("Erase Data")) 
 		{
 			PlayerPrefs.DeleteAll();
-			levelToLoadWhenClickedPlay = "Level01";
+			levelToLoadWhenClickedPlay = "Level01F";
 		}
 		
 		if (GUILayout.Button("Back")) 
