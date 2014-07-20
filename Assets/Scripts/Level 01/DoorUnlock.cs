@@ -19,9 +19,9 @@ public class DoorUnlock : MonoBehaviour {
 		{
 			doorPos.y += 0.05f;
 			bigDoor.GetComponent<Transform> ().position = doorPos;
-			if (doorPos.y >= -6)
+			if (doorPos.y >= 20)
 			{
-				doorPos.y = -6;
+				doorPos.y = 20;
 				bigDoor.GetComponent<Transform> ().position = doorPos;
 				//liftDoor = false;
 			}
