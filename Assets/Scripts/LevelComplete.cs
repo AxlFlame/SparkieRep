@@ -10,6 +10,7 @@ public class LevelComplete : MonoBehaviour {
 	public int completeScreenHeight = 250;
 	public int timeTextWidth = 175;
 	public int timeTextHeight = 25;
+	private Rect WindowRect = new Rect((Screen.width / 2) - 100, Screen.height / 2 + 60, 200, 65);
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
@@ -67,6 +68,10 @@ public class LevelComplete : MonoBehaviour {
 			if (GUI.Button (new Rect (Screen.width/2 - 75, completeScreenRect.y + completeScreenRect.height/2, 150, 40), "Jogar Novamente?")) {
 					Time.timeScale = 1;
 					Application.LoadLevel (Application.loadedLevel);
+			}
+			if (GUI.Button (WindowRect, "Finalizar Demo")) {
+				Time.timeScale = 1;
+				Application.LoadLevel ("GameFinish");
 			}
 		}
 	}

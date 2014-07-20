@@ -14,26 +14,22 @@ public class MainMenuGUI : MonoBehaviour {
 	private Rect loadGameRect = new Rect((Screen.width / 2) - 510, Screen.height / 2, 420, 114);
 	private Rect optionsRect = new Rect((Screen.width / 2) - 550, Screen.height / 2 + 150, 420, 114);
 	private Rect exitRect = new Rect((Screen.width / 2) - 590, Screen.height / 2 + 300, 420, 114);
-	private Rect WindowRect2 = new Rect((Screen.width / 2) - 100, Screen.height / 2, 200, 165);
+	private Rect WindowRect = new Rect((Screen.width / 2) - 250, Screen.height / 2 - 150, 500, 300);
+	private Rect WindowRect2 = new Rect((Screen.width / 2) + 500, Screen.height / 2 - 300, 200, 65);
+	private Rect WindowRect3 = new Rect((Screen.width / 2) - 100, Screen.height / 2, 200, 165);
 	private float volume = 1.0f;
 	
 	// Use this for initialization
 	void Start () {
 		MessageDisplayOnAbout = "Sparkie";
 		MessageDisplayOnAbout += "\n"; 
-		aboutLines [0] = "Jogo em desenvolvimento por Yuri Guzon Mainka";
+		aboutLines [0] = "Jogo em desenvolvimento por Yuri Guzon Mainka como Trabalho de Conclusão de Curso do Curso de Técnico" +
+			"em Desenvolvimento de Jogos Digitais oferecido pelo SENAC." +
+			"\n" +
+			"\n" +
+			"Esta é uma versão de demonstração e não reflete a qualidade final do produto.";
 		
 		//print (aboutLines.Length);
-		
-		
-		if (PlayerPrefs.GetFloat ("Audio Level") < 1) 
-		{
-			volume = PlayerPrefs.GetFloat ("Audio Level");   
-		}
-		else
-		{
-			volume = 1.0f;
-		}
 		
 		for (int x = 0; x < aboutLines.Length;x++ )
 		{
@@ -45,6 +41,7 @@ public class MainMenuGUI : MonoBehaviour {
 	}
 	
 	void OnGUI(){
+		GUI.skin.box.wordWrap = true;
 		if (background != null)
 			GUI.DrawTexture(new Rect(0,0,Screen.width , Screen.height),background);
 		if (LOGO != null && clicked != "about")
@@ -68,14 +65,18 @@ public class MainMenuGUI : MonoBehaviour {
 			{
 				Application.Quit();
 			}
+			if (GUI.Button(WindowRect2, "Sobre o Jogo"))
+			{
+				clicked = "about";
+			}
 		}
 		else if (clicked == "options")
 		{
-			WindowRect2 = GUI.Window(1, WindowRect2, optionsFunc, "Options");
+			WindowRect3 = GUI.Window(1, WindowRect3, optionsFunc, "Options");
 		}
 		else if (clicked == "about")
 		{
-			GUI.Box(new Rect (0,0,Screen.width,Screen.height), MessageDisplayOnAbout);
+			GUI.Box(WindowRect, MessageDisplayOnAbout);
 		}
 	}
 	
@@ -98,31 +99,6 @@ public class MainMenuGUI : MonoBehaviour {
 		}
 		if (DragWindow)
 			GUI.DragWindow(new Rect (0,0,Screen.width,Screen.height));
-	}
-	
-	private void menuFunc(int id)
-	{
-		//buttons 
-		if (GUILayout.Button("Start"))
-		{
-			//play game is clicked
-			//Application.LoadLevel(levelToLoadWhenClickedPlay);
-			AutoFade.LoadLevel(levelToLoadWhenClickedPlay,2,1,Color.black);
-		}
-		if (GUILayout.Button("Options"))
-		{
-			clicked = "options";
-		}
-		if (GUILayout.Button("About"))
-		{
-			clicked = "about";
-		}
-		if (GUILayout.Button("Exit"))
-		{
-			Application.Quit();
-		}
-		if (DragWindow)
-			GUI.DragWindow(new Rect(0, 0, Screen.width, Screen.height));
 	}
 	
 	// Update is called once per frame
