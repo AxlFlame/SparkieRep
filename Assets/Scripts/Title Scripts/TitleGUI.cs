@@ -3,13 +3,15 @@ using System.Collections;
 
 public class TitleGUI : MonoBehaviour {
 	public GUISkin titleSkin;
+	public GUIStyle titleStyle;
 	public Texture2D background, LOGO;
 	public bool DragWindow = false;   
 	public string levelToLoadWhenClickedPlay = ""; 
 	public string[] aboutLines = new string[3];
+	public Texture2D pressStart;
 	
 	private string clicked = "", MessageDisplayOnAbout;
-	private Rect WindowRect = new Rect((Screen.width / 2) - 100, Screen.height / 2, 200, 140);
+	private Rect WindowRect = new Rect((Screen.width / 2) - 210, Screen.height / 2 + 300, 420, 114);
 	private Rect WindowRect2 = new Rect((Screen.width / 2) - 100, Screen.height / 2, 200, 165);
 	private float volume = 1.0f;
 
@@ -37,7 +39,7 @@ public class TitleGUI : MonoBehaviour {
 		}
 		MessageDisplayOnAbout += "\n Pressione Esc para retornar ao Menu Principal.";
 
-		levelToLoadWhenClickedPlay = "Level01F";
+		levelToLoadWhenClickedPlay = "MainMenu";
 	}
 
 	void OnGUI(){
@@ -49,7 +51,10 @@ public class TitleGUI : MonoBehaviour {
 		GUI.skin = titleSkin;
 		if (clicked == "")
 		{
-			WindowRect = GUI.Window(0, WindowRect, menuFunc, "Main Menu");
+			if (GUI.Button(WindowRect, pressStart, titleStyle))
+			{
+				AutoFade.LoadLevel(levelToLoadWhenClickedPlay,2,1,Color.black);
+			}
 		}
 		else if (clicked == "options")
 		{
@@ -71,7 +76,7 @@ public class TitleGUI : MonoBehaviour {
 		if (GUILayout.Button("Erase Data")) 
 		{
 			PlayerPrefs.DeleteAll();
-			levelToLoadWhenClickedPlay = "Level01F";
+			levelToLoadWhenClickedPlay = "MainMenu";
 		}
 		
 		if (GUILayout.Button("Back")) 
@@ -80,31 +85,6 @@ public class TitleGUI : MonoBehaviour {
 		}
 		if (DragWindow)
 			GUI.DragWindow(new Rect (0,0,Screen.width,Screen.height));
-	}
-	
-	private void menuFunc(int id)
-	{
-		//buttons 
-		if (GUILayout.Button("Start"))
-		{
-			//play game is clicked
-			//Application.LoadLevel(levelToLoadWhenClickedPlay);
-			AutoFade.LoadLevel(levelToLoadWhenClickedPlay,3,1,Color.black);
-		}
-		if (GUILayout.Button("Options"))
-		{
-			clicked = "options";
-		}
-		if (GUILayout.Button("About"))
-		{
-			clicked = "about";
-		}
-		if (GUILayout.Button("Exit"))
-		{
-			Application.Quit();
-		}
-		if (DragWindow)
-			GUI.DragWindow(new Rect(0, 0, Screen.width, Screen.height));
 	}
 	
 	// Update is called once per frame

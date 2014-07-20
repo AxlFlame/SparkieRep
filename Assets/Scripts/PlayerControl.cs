@@ -25,6 +25,7 @@ public class PlayerControl : MonoBehaviour
 	private bool grounded = false;			// Whether or not the player is grounded.
 	private bool groundedTop = false;
 	private Animator anim;					// Reference to the player's animator component.
+	public GameObject magnetizer;
 
 
 	void Awake()
@@ -33,6 +34,7 @@ public class PlayerControl : MonoBehaviour
 		groundCheck = transform.Find("groundCheck");
 		groundCheckTop = transform.Find("groundCheckTop");
 		anim = GetComponent<Animator>();
+		magnetizer.GetComponent<CircleCollider2D> ().enabled = false;
 	}
 
 
@@ -45,6 +47,10 @@ public class PlayerControl : MonoBehaviour
 		// If the jump button is pressed and the player is grounded then the player should jump.
 		if(Input.GetButtonDown("Jump")) // && grounded
 			jump = true;
+		if (Input.GetButtonDown("Magnetize"))
+		{
+			EnableMagnet();
+		}
 	}
 
 
@@ -122,6 +128,18 @@ public class PlayerControl : MonoBehaviour
 	void OnCollisionExit2D (Collision2D col)
 	{
 		maxSpeed = 9;
+	}
+
+	void EnableMagnet()
+	{
+		if (magnetizer.GetComponent<CircleCollider2D> ().enabled == false)
+		{
+			magnetizer.GetComponent<CircleCollider2D> ().enabled = true;
+		}
+		else
+		{
+			magnetizer.GetComponent<CircleCollider2D> ().enabled = false;
+		}
 	}
 	
 	void Flip ()
