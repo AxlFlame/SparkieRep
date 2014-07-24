@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
 	public AudioClip[] ouchClips;				// Array of clips to play when the player is damaged.
 	public float hurtForce = 10f;				// The force with which the player is pushed when hurt.
 	public float damageAmount = 10f;			// The amount of damage to take when enemies touch the player
+	//public float alpha;
 
 	private SpriteRenderer healthBar;			// Reference to the sprite renderer of the health bar.
 	private float lastHitTime;					// The time at which the player was last hit.
@@ -22,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
 		playerControl = GetComponent<PlayerControl>();
 		healthBar = GameObject.Find("HealthBar").GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
+		//alpha = gameObject.GetComponentInChildren<SpriteRenderer> ().material.color;
 
 		// Getting the intial scale of the healthbar (whilst the player has full health).
 		healthScale = healthBar.transform.localScale;
@@ -63,9 +65,6 @@ public class PlayerHealth : MonoBehaviour
 					// ... disable user Player Control script
 					GetComponent<PlayerControl>().enabled = false;
 
-					// ... disable the Gun script to stop a dead guy shooting a nonexistant bazooka
-					GetComponentInChildren<Gun>().enabled = false;
-
 					// ... Trigger the 'Die' animation state
 					anim.SetTrigger("Die");
 				}
@@ -76,6 +75,7 @@ public class PlayerHealth : MonoBehaviour
 
 	void TakeDamage (Transform enemy)
 	{
+		//gameObject.GetComponentInChildren<SpriteRenderer> ().material.color.a = 0.5f;
 		// Make sure the player can't jump.
 		playerControl.jump = false;
 
