@@ -8,7 +8,8 @@ public class PlayerHealth : MonoBehaviour
 	public AudioClip[] ouchClips;				// Array of clips to play when the player is damaged.
 	public float hurtForce = 10f;				// The force with which the player is pushed when hurt.
 	public float damageAmount = 10f;			// The amount of damage to take when enemies touch the player
-	//public float alpha;
+	public GameObject sparkieCycle;
+	private SpriteRenderer sparkieRenderer;
 
 	private SpriteRenderer healthBar;			// Reference to the sprite renderer of the health bar.
 	private float lastHitTime;					// The time at which the player was last hit.
@@ -23,6 +24,7 @@ public class PlayerHealth : MonoBehaviour
 		playerControl = GetComponent<PlayerControl>();
 		healthBar = GameObject.Find("HealthBar").GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
+		sparkieRenderer = sparkieCycle.GetComponent<SpriteRenderer> ();
 		//alpha = gameObject.GetComponentInChildren<SpriteRenderer> ().material.color;
 
 		// Getting the intial scale of the healthbar (whilst the player has full health).
@@ -44,6 +46,7 @@ public class PlayerHealth : MonoBehaviour
 					// ... take damage and reset the lastHitTime.
 					TakeDamage(col.transform); 
 					lastHitTime = Time.time; 
+					sparkieRenderer.color = new Color(1f,1f,1f,0.3f);
 				}
 				// If the player doesn't have health, do some stuff, let him fall into the river to reload the level.
 				else
@@ -75,7 +78,6 @@ public class PlayerHealth : MonoBehaviour
 
 	void TakeDamage (Transform enemy)
 	{
-		//gameObject.GetComponentInChildren<SpriteRenderer> ().material.color.a = 0.5f;
 		// Make sure the player can't jump.
 		playerControl.jump = false;
 
@@ -96,6 +98,13 @@ public class PlayerHealth : MonoBehaviour
 		AudioSource.PlayClipAtPoint(ouchClips[i], transform.position);
 	}
 
+	void Update()
+	{
+		if (Time.time > lastHitTime + repeatDamagePeriod) 
+		{
+			sparkieRenderer.color = new Color(1f,1f,1f,1f);
+		}
+	}
 
 	public void UpdateHealthBar ()
 	{
