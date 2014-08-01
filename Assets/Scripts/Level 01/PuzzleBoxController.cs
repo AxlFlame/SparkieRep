@@ -18,7 +18,7 @@ public class PuzzleBoxController : MonoBehaviour {
 			gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
 			sparkieX = player.GetComponent<Transform>().position.x;
 			boxPos.x = sparkieX;
-			boxPos.y = -6.5f;
+			boxPos.y = -5.9f;
 			transform.position = boxPos;
 		}
 		else

@@ -3,19 +3,19 @@ using System.Collections;
 
 public class MainMenuGUI : MonoBehaviour {
 	public GUIStyle titleStyle;
-	public Texture2D background, LOGO, newGameTexture, loadGameTexture, optionsTexture, exitTexture;
+	public Texture2D background, LOGO, newGameTexture, loadGameTexture, optionsTexture, aboutTexture, exitTexture;
 	public bool DragWindow = false;   
 	public string levelToLoadWhenClickedPlay = ""; 
 	public string[] aboutLines = new string[3];
 	public Texture2D pressStart;
 	
 	private string clicked = "", MessageDisplayOnAbout;
-	private Rect newGameRect = new Rect((Screen.width / 2) - 470, Screen.height / 2 - 150, 420, 114);
-	private Rect loadGameRect = new Rect((Screen.width / 2) - 510, Screen.height / 2, 420, 114);
-	private Rect optionsRect = new Rect((Screen.width / 2) - 550, Screen.height / 2 + 150, 420, 114);
-	private Rect exitRect = new Rect((Screen.width / 2) - 590, Screen.height / 2 + 300, 420, 114);
+	private Rect newGameRect = new Rect((Screen.width / 2) - 400, Screen.height / 2 - 300, 420, 114);
+	private Rect loadGameRect = new Rect((Screen.width / 2) - 450, Screen.height / 2 - 150, 420, 114);
+	private Rect optionsRect = new Rect((Screen.width / 2) - 500, Screen.height / 2, 420, 114);
+	private Rect aboutRect = new Rect((Screen.width / 2) - 550, Screen.height / 2 + 150, 420, 114);
+	private Rect exitRect = new Rect((Screen.width / 2) - 600, Screen.height / 2 + 300, 420, 114);
 	private Rect WindowRect = new Rect((Screen.width / 2) - 250, Screen.height / 2 - 150, 500, 300);
-	private Rect WindowRect2 = new Rect((Screen.width / 2) + 500, Screen.height / 2 - 300, 200, 65);
 	private Rect WindowRect3 = new Rect((Screen.width / 2) - 100, Screen.height / 2, 200, 165);
 	private float volume = 1.0f;
 	
@@ -65,7 +65,7 @@ public class MainMenuGUI : MonoBehaviour {
 			{
 				Application.Quit();
 			}
-			if (GUI.Button(WindowRect2, "Sobre o Jogo"))
+			if (GUI.Button(aboutRect, aboutTexture, titleStyle))
 			{
 				clicked = "about";
 			}
